@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  color: #212121;
+  line-height: 1.5;
+}
+
+
+
+ /* ===================================SEACRH_CITY===================================== */
+#search-box {
+  font: inherit;
+  padding: 8px;
+  max-width: 320px;
+  margin-bottom: 16px;
+}
+
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  font-size: 40px;
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+
+}
+
+.country-flag{
+  width: 30px;
+  height: 100%;
+}
+
+
+.country-item {
+  display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.country-item-name{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 20px;
+}
+
+.country-option {
+  font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.country-item-name {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.country-option{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* ===================================SEACRH_IMAGES===================================== */
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+background-color: tomato;
+  color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+        .photo-card {
+          flex-basis: calc(20% - 20px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #f1f1f1;
+          padding: 10px;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.info {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.info-item {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.load-more {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: tomato;
+  color: white;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
