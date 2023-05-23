@@ -31,16 +31,14 @@ function onInputCountry() {
                 listEl.insertAdjacentHTML('beforeend', createListOfCountry(countries));
             }
         })
-    .catch(error => {
-    if (error.status = '404') {
-         alertErrorSpecific();
-    } else {
-         error.message();
-    }
-    listEl.innerHTML = '';
-    optiontEl.innerHTML = '';
+      .catch((error) => {
+          if (error.status = '404') {
+              Notiflix.Notify.failure("Oops, there is no country with that name");
+          } else {
+              Notiflix.Notify.failure(error.message);
+          }
+        clearFields();
 })
-}
 
 
 

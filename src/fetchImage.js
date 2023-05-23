@@ -7,9 +7,10 @@ export default class NewsAPIService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.perPage = 40;
   }
 
-  async getImg() {
+  async getImages() {
     const searchParams = new URLSearchParams({
       key: API_KEY,
       q: this.searchQuery,
@@ -17,14 +18,16 @@ export default class NewsAPIService {
       orientation: 'horizontal',
       safesearch: true,
       page: this.page,
-      per_page: 40,
+      per_page: this.perPage,
     });
 
     const { data } = await axios.get(`${BASE_URL}?${searchParams}`);
     this.incrementPage();
 
-    return data.hits;
+    return data;
   }
+
+    
 
   resetPage() {
     this.page = 1;
