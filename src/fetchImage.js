@@ -24,9 +24,10 @@ export default class NewsAPIService {
 
       const response = await axios.get(`${BASE_URL}?${searchParams}`);
       this.incrementPage();
-
       return response.data;
-    } catch (error) {
+    }
+    
+    catch (error) {
       throw new Error(error);
     }
   }

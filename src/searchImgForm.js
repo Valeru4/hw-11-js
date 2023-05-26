@@ -6,15 +6,10 @@ import LoadMoreBtn from "./LoadMoreBtn.js";
 import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-
-const BASE_URL = 'https://pixabay.com/api/';
-const API_KEY = '17538652-b999fbbbfe57ad3fb90b083ce';
-
 const refs = {
   formEl: document.querySelector('#search-form'),
   galleryEl: document.querySelector('.gallery'),
 };
-
 const newsApiService = new NewsAPIService();
 const gallery = new SimpleLightbox('.gallery a');
 const loadMoreBtn = new LoadMoreBtn({
@@ -29,35 +24,36 @@ async function onSearch(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const value = form.elements.searchQuery.value.trim();
-
+newsApiService.searchQuery = value
+  console.log(newsApiService.searchQuery)
   clearNewsList();
+
   
-  newsApiService.searchQuery = value;
-
-
-  if (value === '') {
+  if (newsApiService.searchQuery === '') {
     Notiflix.Notify.info('Please write your request');
-    return;
-  }
+    }
 
   try {
     const data = await newsApiService.getImages(value);
 
     console.log(data);
+    console.log(data.hits)
 
     if (data.totalHits > 0) {
       Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
     }
   
-    if (data.hits.length === 0) {
-      Notiflix.Notify.info(
-        'Sorry, there are no images matching your search query. Please try again.')
+    else if (data.hits.length === 0) {
+      Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
     }
   
-    newsApiService.resetPage();
-    const markup = generateMarkup(data.hits);
-    onUpdateMarkup(markup);
-     onLoadMore();
+    else {
+      const markup = generateMarkup(data.hits);
+       onUpdateMarkup(markup);
+    loadMoreBtn.show();
+      loadMoreBtn.enable();
+    }   
+      
   }
 
   catch (error) {
@@ -70,14 +66,15 @@ async function onSearch(event) {
 async function onLoadMore() {
   loadMoreBtn.disable();
 
-  try {
+ clearNewsList();
     
     const data = await newsApiService.getImages();
     const images = data.hits;
     const markup = generateMarkup(images);
     if (!markup) throw new Error('No data');
-    onUpdateMarkup(markup);
-
+  onUpdateMarkup(markup);
+  
+ try {
     const totalHits = data.totalHits;
     const perPage = newsApiService.perPage;
     const currentPage = newsApiService.page;
@@ -88,7 +85,7 @@ async function onLoadMore() {
       Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
        
 
-    } if (images.length === 0) {
+    } else if (images.length === 0) {
         throw new Error("Sorry, there are no images matching your search query. Please try again.");
       }
     
@@ -105,8 +102,8 @@ const markup = generateMarkup(data.hits);
 
 
 function generateMarkup(images) {
-  
-  return images
+ 
+    return images
     .map(
       (image) =>
         `<div class="photo-card">
