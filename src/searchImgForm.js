@@ -72,7 +72,6 @@ async function onLoadMore() {
 
   try {
     
-
     const data = await newsApiService.getImages();
     const images = data.hits;
     const markup = generateMarkup(images);
@@ -85,8 +84,9 @@ async function onLoadMore() {
     const totalPages = Math.ceil(totalHits / perPage);
 
     if (currentPage >= totalPages) {
-      loadMoreBtn.hide();
-              Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+     loadMoreBtn.hide();
+      Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+       
 
     } if (images.length === 0) {
         throw new Error("Sorry, there are no images matching your search query. Please try again.");
@@ -94,7 +94,8 @@ async function onLoadMore() {
     
     else {
 const markup = generateMarkup(data.hits);
-    onUpdateMarkup(markup);
+      onUpdateMarkup(markup);
+      loadMoreBtn.show()
       loadMoreBtn.enable();
     }
   } catch (err) {
