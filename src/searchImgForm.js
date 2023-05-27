@@ -31,7 +31,7 @@ async function onSearch(event) {
 newsApiService.searchQuery = value
   console.log(newsApiService.searchQuery)
   clearNewsList();
-// loadMoreBtn.hide()
+loadMoreBtn.hide()
   
   if (newsApiService.searchQuery === '') {
     Notiflix.Notify.info('Please write your request');
@@ -44,24 +44,28 @@ newsApiService.searchQuery = value
     console.log(data);
     console.log(data.hits)
 
-   if (data.hits.length === 0) {
+    if (data.hits.length === 0) {
+     
       Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
+      clearNewsList();
+
     }
 
     else if (data.totalHits > 0 && data.totalHits === data.hits.length) {
       Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
- const markup = generateMarkup(data.hits);
-       onUpdateMarkup(markup);
-    // loadMoreBtn.show();
-    //   loadMoreBtn.enable();
+      const markup = generateMarkup(data.hits);
+      onUpdateMarkup(markup);
+      // loadMoreBtn.show();
+      //   loadMoreBtn.enable();
     }
-     else {  Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
- const markup = generateMarkup(data.hits);
-       onUpdateMarkup(markup);
-    loadMoreBtn.show();
+    else {
+      Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
+      const markup = generateMarkup(data.hits);
+      onUpdateMarkup(markup);
+      loadMoreBtn.show();
       loadMoreBtn.enable();
     }
-  
+  }
   
 
 //     if (data.hits.length === data.totalHits) {
@@ -71,11 +75,10 @@ newsApiService.searchQuery = value
       
 //     }
   
-    
-     
+  
     
       
-  }
+  
 
   catch (error) {
     onError(error);
@@ -91,7 +94,7 @@ newsApiService.searchQuery = value
 async function onLoadMore() {
   loadMoreBtn.disable();
 
- clearNewsList();
+//  clearNewsList();
     
    
   
@@ -113,15 +116,15 @@ async function onLoadMore() {
       // onUpdateMarkup(markup);
       loadMoreBtn.hide();
     }
-     if (data.hits.length === 0) {
-        throw new Error("Sorry, there are no images matching your search query. Please try again.");
-      }
+    //  if (data.hits.length === 0) {
+    //     throw new Error("Sorry, there are no images matching your search query. Please try again.");
+    //   }
     
     if (data.totalHits > 0 ) {
 const markup = generateMarkup(data.hits);
       onUpdateMarkup(markup);
       // loadMoreBtn.show()
-      // loadMoreBtn.enable();
+      loadMoreBtn.enable();
     }
   } catch (err) {
     onError(err);
