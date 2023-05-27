@@ -43,16 +43,23 @@ newsApiService.searchQuery = value
       Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
     }
   
-    else if (data.hits.length === 0) {
+     if (data.hits.length === 0) {
       Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
     }
+
+    if (data.hits.length === data.totalHits) {
+          console.log("Hiding load more button");
+loadMoreBtn.hide();
+          Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+      
+    }
   
-    else {
+    
       const markup = generateMarkup(data.hits);
        onUpdateMarkup(markup);
     loadMoreBtn.show();
       loadMoreBtn.enable();
-    }   
+    
       
   }
 
@@ -63,29 +70,35 @@ newsApiService.searchQuery = value
   }
 }
 
+
+
+
+
 async function onLoadMore() {
   loadMoreBtn.disable();
 
  clearNewsList();
     
-    const data = await newsApiService.getImages();
-    const images = data.hits;
-    const markup = generateMarkup(images);
-    if (!markup) throw new Error('No data');
-  onUpdateMarkup(markup);
+   
   
- try {
+  try {
+        
+ 
+    const data = await newsApiService.getImages(newsApiService.searchQuery );
     const totalHits = data.totalHits;
     const perPage = newsApiService.perPage;
     const currentPage = newsApiService.page;
-    const totalPages = Math.ceil(totalHits / perPage);
+    const totalPages =totalHits / perPage;
 
+
+    console.log(currentPage)
+      console.log(totalPages)
     if (currentPage >= totalPages) {
-     loadMoreBtn.hide();
       Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-       
-
-    } else if (images.length === 0) {
+      
+      loadMoreBtn.hide();
+    }
+    else if (data.hits.length === 0) {
         throw new Error("Sorry, there are no images matching your search query. Please try again.");
       }
     
@@ -99,6 +112,9 @@ const markup = generateMarkup(data.hits);
     onError(err);
   }
 }
+
+
+
 
 
 function generateMarkup(images) {

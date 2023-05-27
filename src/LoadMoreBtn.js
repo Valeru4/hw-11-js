@@ -1,7 +1,7 @@
 export default class LoadMoreBtn {
-  static classes = {
-    hidden: "hidden",
-  };
+ static classes = {
+  hidden: "hidden",
+};
 
   constructor({ selector, isHidden = false }) {
     this.button = this.getButton(selector);
@@ -14,7 +14,7 @@ export default class LoadMoreBtn {
   }
 
   hide() {
-    this.button.classList.add(LoadMoreBtn.classes.hidden);
+this.button.classList.add(LoadMoreBtn.classes.hidden);
   }
 
   show() {
