@@ -17,29 +17,30 @@ function onInputCountry() {
         return (listEl.innerHTML = ''), (optiontEl.innerHTML = '')
     }
 
-    fetchCountries(country) 
+    fetchCountries(country)
         .then(countries => {
             listEl.innerHTML = ''
             optiontEl.innerHTML = ''
             if (countries.length === 1) {
-            listEl.insertAdjacentHTML('beforeend', createListOfCountry(countries));
-            optiontEl.insertAdjacentHTML('beforeend', createOptionsOfCountry(countries));
+                listEl.insertAdjacentHTML('beforeend', createListOfCountry(countries));
+                optiontEl.insertAdjacentHTML('beforeend', createOptionsOfCountry(countries));
 
-            } else if (countries.length > 10) { 
+            } else if (countries.length > 10) {
                 alertErrorTooManyMatches()
-            } else if (countries.length >=2 && countries.length <= 10){
+            } else if (countries.length >= 2 && countries.length <= 10) {
                 listEl.insertAdjacentHTML('beforeend', createListOfCountry(countries));
             }
         })
-      .catch((error) => {
-          if (error.status = '404') {
-              Notiflix.Notify.failure("Oops, there is no country with that name");
-          } else {
-              Notiflix.Notify.failure(error.message);
-          }
-        clearFields();
-})
-
+        .catch(error => {
+            if (error.message === '404') {
+                Notiflix.Notify.failure('Oops, there is no country with that name');
+            } else {
+                Notiflix.Notify.failure(error.message);
+            }
+            listEl.innerHTML = '';
+            optiontEl.innerHTML = '';
+        })
+}
 
 
 function createListOfCountry(countries) {
@@ -71,4 +72,3 @@ Notiflix.Notify.failure('Oops, there is no country with that name')
 function alertErrorTooManyMatches() {
 Notiflix.Notify.info('Too many matches found. Please enter a more specific name.')
 }
-

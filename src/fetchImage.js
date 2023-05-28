@@ -23,7 +23,8 @@ export default class NewsAPIService {
       });
 
       const response = await axios.get(`${BASE_URL}?${searchParams}`);
-      this.incrementPage();
+      // this.incrementPage();
+      console.log(this.page)
       return response.data;
     }
     
@@ -31,14 +32,13 @@ export default class NewsAPIService {
       throw new Error(error);
     }
   }
-
   resetPage() {
-    this.page = 1;
+    this.page = 1
   }
-
   incrementPage() {
-    this.page += 1;
-  }
+  this.page +=1
+}
+
 }
 
 

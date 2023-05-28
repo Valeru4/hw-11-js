@@ -13,7 +13,7 @@ const refs = {
   galleryEl: document.querySelector('.gallery'),
 };
 const newsApiService = new NewsAPIService();
-const gallery = new SimpleLightbox('.gallery a');
+// const gallery = new SimpleLightbox('.gallery a');
 const loadMoreBtn = new LoadMoreBtn({
   selector: '.load-more',
   isHidden: true,
@@ -28,8 +28,11 @@ async function onSearch(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const value = form.elements.searchQuery.value.trim();
-newsApiService.searchQuery = value
+  newsApiService.searchQuery = value
+
+ 
   console.log(newsApiService.searchQuery)
+  newsApiService.resetPage()
   clearNewsList();
 loadMoreBtn.hide()
   
@@ -53,6 +56,7 @@ loadMoreBtn.hide()
 
     else if (data.totalHits > 0 && data.totalHits === data.hits.length) {
       Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
+      
       const markup = generateMarkup(data.hits);
       onUpdateMarkup(markup);
       // loadMoreBtn.show();
@@ -93,10 +97,9 @@ loadMoreBtn.hide()
 
 async function onLoadMore() {
   loadMoreBtn.disable();
-
 //  clearNewsList();
     
-   
+   newsApiService.incrementPage()
   
   try {
         
@@ -180,15 +183,13 @@ function clearNewsList() {
 
 
 refs.galleryEl.addEventListener('click', (event) => {
-
+    event.preventDefault();
     const lightBox = new SimpleLightbox('.photo-card a',
     {captionDelay: 250, 
      enableKeyboard: true, 
      captionsData: 'alt', 
      captions: true})
 });
-
-
 
 
 
